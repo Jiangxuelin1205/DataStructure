@@ -4,12 +4,12 @@ public class DenseGraph {
 
     private int edgeCount;
     private int pointCount;
-    private boolean isDirected;
+    private final boolean isDirected;
     private boolean[][] graph;
 
-    public DenseGraph(int pointCount) {
+    public DenseGraph(int pointCount, boolean isDirected) {
         this.edgeCount = 0;
-        this.isDirected = false;
+        this.isDirected = isDirected;
         this.pointCount = pointCount;
         graph = new boolean[pointCount][pointCount];
     }
@@ -23,7 +23,7 @@ public class DenseGraph {
     }
 
     public void addEdge(int startPoint, int endPoint) throws DenseGraphException {
-        if (illegal(startPoint, endPoint)) {
+        if (!legal(startPoint, endPoint)) {
             throw new DenseGraphException("节点坐标不合法");
         }
         if (hasEdge(startPoint, endPoint)) {
@@ -36,7 +36,7 @@ public class DenseGraph {
         edgeCount++;
     }
 
-    private boolean illegal(int startPoint, int endPoint) {
+    private boolean legal(int startPoint, int endPoint) {
         return startPoint >= 0 && startPoint < pointCount &&
                 endPoint >= 0 && endPoint < pointCount;
     }
@@ -45,4 +45,37 @@ public class DenseGraph {
         return graph[startPoint][endPoint];
     }
 
+    public void traverse() {
+        for (int i = 0; i < graph.length; i++) {
+            System.out.print(i + ":");
+            DenseGraphIterator iterator = new DenseGraphIterator(graph[i]);
+            while (iterator.hasNext()) {
+                System.out.print(iterator.next() + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    private class DenseGraphIterator {
+
+        private int index;
+        private boolean[] row;
+
+        DenseGraphIterator(boolean[] row) {
+            this.index = 0;
+            this.row = row;
+        }
+
+        boolean hasNext() {
+            while (index<row.length&&!row[index]) {
+                index++;
+            }
+            return index < row.length;
+        }
+
+        int next() {
+            return index++;
+        }
+
+    }
 }
