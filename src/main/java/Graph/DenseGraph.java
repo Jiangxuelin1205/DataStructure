@@ -12,6 +12,8 @@ public class DenseGraph extends Graph {
         this.edgeCount = 0;
         this.isDirected = isDirected;
         this.pointCount = pointCount;
+        this.component = 0;
+        this.id = new int[pointCount];
         createGraph();
     }
 
@@ -81,6 +83,30 @@ public class DenseGraph extends Graph {
 
         int next() {
             return index++;
+        }
+    }
+
+    @Override
+    public int dfs() {
+        boolean[] isVisited = new boolean[pointCount];
+        for (int i = 0; i < pointCount; i++) {
+            if (!isVisited[i]) {
+                isVisited[i] = true;
+                id[i] = component;
+                dfs(i, isVisited);
+                component++;
+            }
+        }
+        return component;
+    }
+
+    private void dfs(int i, boolean[] isVisited) {
+        for (int index = 0; index < pointCount; index++) {
+            if (graph[i][index] && !isVisited[index]) {
+                isVisited[index] = true;
+                id[index] = component;
+                dfs(index, isVisited);
+            }
         }
     }
 }

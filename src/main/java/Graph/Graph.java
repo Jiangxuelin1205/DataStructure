@@ -7,6 +7,8 @@ abstract class Graph {
     int edgeCount;
     int pointCount;
     boolean isDirected;
+    int component;
+    int[] id;
 
     public abstract int pointCount();
 
@@ -38,6 +40,7 @@ abstract class Graph {
         line = reader.readLine();
         pointCount = Integer.valueOf(line.split(" ")[0]);
         edgeCount = Integer.valueOf(line.split(" ")[1]);
+        id = new int[pointCount];
     }
 
     private void parseEdge(BufferedReader reader) throws IOException, GraphException {
@@ -47,5 +50,14 @@ abstract class Graph {
             int endPoint = Integer.valueOf(line.split(" ")[1]);
             addEdge(startPoint, endPoint);
         }
+    }
+
+    /**
+     * @Description 深度优先遍历一张图
+     **/
+    public abstract int dfs();
+
+    public boolean isConnected(int point1, int point2) {
+        return id[point1] == id[point2];
     }
 }

@@ -74,4 +74,32 @@ public class SparseGraph extends Graph {
             graph.add(new ArrayList<>());
         }
     }
+
+    @Override
+    public int dfs() {
+        boolean[] isVisited = new boolean[pointCount];
+        for (int i = 0; i < pointCount; i++) {
+            if (!isVisited[i]) {
+
+                dfs(i, isVisited);
+                component++;
+            }
+        }
+        return component;
+    }
+
+    private void dfs(int i, boolean[] isVisited) {
+        isVisited[i] = true;
+        id[i] = component;
+        if (graph.get(i).size() == 0) {
+            return;
+        }
+        for (Integer index : graph.get(i)) {
+            if (!isVisited[index]) {
+                dfs(index, isVisited);
+            }
+        }
+    }
+
+
 }

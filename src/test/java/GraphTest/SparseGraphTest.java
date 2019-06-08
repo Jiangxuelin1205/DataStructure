@@ -42,4 +42,27 @@ public class SparseGraphTest {
         graph.readGraph("./src/main/java/Graph/graphProperties");
         graph.traverse();
     }
+
+    @Test
+    public void dfs_test() throws IOException, GraphException {
+        SparseGraph graph = new SparseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        Assert.assertEquals(graph.dfs(),3);
+    }
+
+    @Test
+    public void is_connected() throws IOException, GraphException {
+        SparseGraph graph = new SparseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        graph.dfs();
+        Assert.assertTrue(graph.isConnected(1,3));
+    }
+
+    @Test
+    public void is_not_connected() throws IOException, GraphException {
+        SparseGraph graph = new SparseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        graph.dfs();
+        Assert.assertFalse(graph.isConnected(0,3));
+    }
 }
