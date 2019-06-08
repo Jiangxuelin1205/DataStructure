@@ -60,4 +60,6 @@ abstract class Graph {
     }
 
     public abstract List<Integer> path(int startPoint, int endPoint);
+
+    public abstract void bfs();
 }

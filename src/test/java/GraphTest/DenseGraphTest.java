@@ -80,4 +80,10 @@ public class DenseGraphTest {
         Assert.assertNull(graph.path(0, 3));
     }
 
+    @Test
+    public void bfs() throws IOException, GraphException {
+        DenseGraph graph = new DenseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        graph.bfs();
+    }
 }

@@ -79,4 +79,11 @@ public class SparseGraphTest {
         graph.readGraph("./src/main/java/Graph/graphProperties");
         Assert.assertNull(graph.path(0,3));
     }
+
+    @Test
+    public void bfs() throws IOException, GraphException {
+        SparseGraph graph = new SparseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        graph.bfs();
+    }
 }

@@ -1,8 +1,6 @@
 package Graph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class DenseGraph extends Graph {
 
@@ -149,6 +147,36 @@ public class DenseGraph extends Graph {
                 isVisited[index] = true;
                 findPath(index, from, isVisited);
             }
+        }
+    }
+
+    @Override
+    public void bfs() {
+        boolean[] isVisited = new boolean[pointCount];
+        int[] from = new int[pointCount];
+        for(int i=0;i<from.length;i++){
+            from[i]=-1;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < pointCount; i++) {
+            if (!isVisited[i]) {
+                bfs(i, isVisited, from, q);
+            }
+        }
+    }
+
+    private void bfs(int startPoint, boolean[] isVisited, int[] from, Queue<Integer> q) {
+        isVisited[startPoint] = true;
+        q.offer(startPoint);
+        while (!q.isEmpty()) {
+            @SuppressWarnings("ConstantConditions")
+            int i = q.poll();
+            for (int index = 0; index < pointCount; index++)
+                if (graph[i][index] && !isVisited[index]) {
+                    q.offer(index);
+                    isVisited[index] = true;
+                    from[index] = i;
+                }
         }
     }
 

@@ -1,8 +1,6 @@
 package Graph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class SparseGraph extends Graph {
 
@@ -81,7 +79,6 @@ public class SparseGraph extends Graph {
         boolean[] isVisited = new boolean[pointCount];
         for (int i = 0; i < pointCount; i++) {
             if (!isVisited[i]) {
-
                 dfs(i, isVisited);
                 component++;
             }
@@ -140,4 +137,43 @@ public class SparseGraph extends Graph {
             }
         }
     }
+
+    /**
+     * @Description 打印路径
+     **/
+    @Override
+    public void bfs() {
+        boolean[] isVisited = new boolean[pointCount];
+        int[] from = new int[pointCount];
+        for(int i=0;i<from.length;i++){
+            from[i]=-1;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < pointCount; i++) {
+            if (!isVisited[i]) {
+                bfs(i, isVisited, from, q);
+            }
+        }
+
+        for (int i = 0; i < from.length; i++) {
+            System.out.println(from[i]);
+        }
+    }
+
+    private void bfs(int startPoint, boolean[] isVisited, int[] from, Queue<Integer> q) {
+        isVisited[startPoint] = true;
+        q.offer(startPoint);
+        while (!q.isEmpty()) {
+            int i = q.poll();
+            for (Integer point : graph.get(i)) {
+                if (!isVisited[point]) {
+                    isVisited[point] = true;
+                    from[point] = i;
+                    q.offer(point);
+                }
+            }
+        }
+    }
+
+
 }
