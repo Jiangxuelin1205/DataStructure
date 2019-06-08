@@ -1,9 +1,11 @@
 package GraphTest;
 
 import Graph.SparseGraph;
-import Graph.SparseGraphException;
+import Graph.GraphException;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
 
 public class SparseGraphTest {
 
@@ -20,17 +22,24 @@ public class SparseGraphTest {
     }
 
     @Test
-    public void add_edge() throws SparseGraphException {
+    public void add_edge() throws GraphException {
         SparseGraph sparseGraph=new SparseGraph(3,false);
         sparseGraph.addEdge(1,2);
         Assert.assertEquals(sparseGraph.edgeCount(),1);
     }
 
     @Test
-    public void traverse() throws SparseGraphException {
+    public void traverse() throws GraphException {
         SparseGraph sparseGraph=new SparseGraph(3,false);
         sparseGraph.addEdge(1,2);
         sparseGraph.addEdge(0,2);
         sparseGraph.traverse();
+    }
+
+    @Test
+    public void read_graph_test() throws IOException, GraphException {
+        SparseGraph graph=new SparseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        graph.traverse();
     }
 }

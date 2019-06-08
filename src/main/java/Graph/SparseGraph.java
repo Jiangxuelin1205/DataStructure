@@ -1,25 +1,21 @@
 package Graph;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class SparseGraph {
+public class SparseGraph extends Graph {
 
-    private int edgeCount;
-    private int pointCount;
-    private final boolean isDirected;
     private List<List<Integer>> graph;
+
+    public SparseGraph() {
+
+    }
 
     public SparseGraph(int pointCount, boolean isDirected) {
         this.pointCount = pointCount;
         this.isDirected = isDirected;
         this.edgeCount = 0;
-        graph = new ArrayList<>();
-        for (int i = 0; i < pointCount; i++) {
-            graph.add(new ArrayList<>());
-        }
+        createGraph();
     }
 
     public int pointCount() {
@@ -30,9 +26,9 @@ public class SparseGraph {
         return edgeCount;
     }
 
-    public void addEdge(int startPoint, int endPoint) throws SparseGraphException {
+    public void addEdge(int startPoint, int endPoint) throws GraphException {
         if (!legal(startPoint, endPoint)) {
-            throw new SparseGraphException("节点坐标不合法");
+            throw new GraphException("节点坐标不合法");
         }
         if (hasEdge(startPoint, endPoint)) {
             return;
@@ -61,16 +57,21 @@ public class SparseGraph {
                 && endPoint >= 0 && endPoint < pointCount;
     }
 
-    public void traverse(){
-        for(int i=0;i<graph.size();i++){
-            if(graph.get(i).size()==0){
-                continue;
-            }
-            System.out.print(i+":");
-            for(int j=0;j<graph.get(i).size();j++){
-                System.out.print(graph.get(i).get(j)+" ");
+    public void traverse() {
+        for (int i = 0; i < graph.size(); i++) {
+            System.out.print(i + ":");
+            for (int j = 0; j < graph.get(i).size(); j++) {
+                System.out.print(graph.get(i).get(j) + " ");
             }
             System.out.println();
+        }
+    }
+
+    @Override
+    public void createGraph() {
+        graph = new ArrayList<>();
+        for (int i = 0; i < pointCount; i++) {
+            graph.add(new ArrayList<>());
         }
     }
 }

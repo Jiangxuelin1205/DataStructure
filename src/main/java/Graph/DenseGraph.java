@@ -1,17 +1,18 @@
 package Graph;
 
-public class DenseGraph {
+public class DenseGraph extends Graph {
 
-    private int edgeCount;
-    private int pointCount;
-    private final boolean isDirected;
     private boolean[][] graph;
+
+    public DenseGraph() {
+
+    }
 
     public DenseGraph(int pointCount, boolean isDirected) {
         this.edgeCount = 0;
         this.isDirected = isDirected;
         this.pointCount = pointCount;
-        graph = new boolean[pointCount][pointCount];
+        createGraph();
     }
 
     public int pointCount() {
@@ -22,9 +23,9 @@ public class DenseGraph {
         return edgeCount;
     }
 
-    public void addEdge(int startPoint, int endPoint) throws DenseGraphException {
+    public void addEdge(int startPoint, int endPoint) throws GraphException {
         if (!legal(startPoint, endPoint)) {
-            throw new DenseGraphException("节点坐标不合法");
+            throw new GraphException("节点坐标不合法");
         }
         if (hasEdge(startPoint, endPoint)) {
             return;
@@ -56,6 +57,11 @@ public class DenseGraph {
         }
     }
 
+    @Override
+    public void createGraph() {
+        graph = new boolean[pointCount][pointCount];
+    }
+
     private class DenseGraphIterator {
 
         private int index;
@@ -67,7 +73,7 @@ public class DenseGraph {
         }
 
         boolean hasNext() {
-            while (index<row.length&&!row[index]) {
+            while (index < row.length && !row[index]) {
                 index++;
             }
             return index < row.length;
@@ -76,6 +82,5 @@ public class DenseGraph {
         int next() {
             return index++;
         }
-
     }
 }

@@ -1,9 +1,11 @@
 package GraphTest;
 
 import Graph.DenseGraph;
-import Graph.DenseGraphException;
+import Graph.GraphException;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
 
 public class DenseGraphTest {
 
@@ -20,17 +22,24 @@ public class DenseGraphTest {
     }
 
     @Test
-    public void add_edge() throws DenseGraphException {
+    public void add_edge() throws GraphException {
         DenseGraph denseGraph=new DenseGraph(3,false);
         denseGraph.addEdge(1,2);
         Assert.assertEquals(denseGraph.edgeCount(),1);
     }
 
     @Test
-    public void traverse() throws DenseGraphException {
+    public void traverse() throws GraphException {
         DenseGraph denseGraph=new DenseGraph(3,false);
         denseGraph.addEdge(1,2);
         denseGraph.addEdge(0,1);
         denseGraph.traverse();
+    }
+
+    @Test
+    public void read_graph_test() throws IOException, GraphException {
+        DenseGraph graph=new DenseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        graph.traverse();
     }
 }
