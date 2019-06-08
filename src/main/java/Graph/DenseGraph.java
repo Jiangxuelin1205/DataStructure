@@ -1,5 +1,9 @@
 package Graph;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 public class DenseGraph extends Graph {
 
     private boolean[][] graph;
@@ -91,8 +95,6 @@ public class DenseGraph extends Graph {
         boolean[] isVisited = new boolean[pointCount];
         for (int i = 0; i < pointCount; i++) {
             if (!isVisited[i]) {
-                isVisited[i] = true;
-                id[i] = component;
                 dfs(i, isVisited);
                 component++;
             }
@@ -101,12 +103,54 @@ public class DenseGraph extends Graph {
     }
 
     private void dfs(int i, boolean[] isVisited) {
+        isVisited[i] = true;
+        id[i] = component;
         for (int index = 0; index < pointCount; index++) {
             if (graph[i][index] && !isVisited[index]) {
-                isVisited[index] = true;
-                id[index] = component;
                 dfs(index, isVisited);
             }
         }
     }
+
+    @Override
+    public List<Integer> path(int startPoint, int endPoint) {
+        int[] from = new int[pointCount];
+        boolean[] isVisited = new boolean[pointCount];
+        for (int i = 0; i < pointCount; i++) {
+            from[i] = -1;
+        }
+        isVisited[startPoint] = true;
+        findPath(startPoint, from, isVisited);
+        if (hasPath(from, endPoint)) {
+            return null;
+        }
+        Stack<Integer> stk = new Stack<>();
+        int i = endPoint;
+        while (from[i] != -1) {
+            stk.push(from[i]);
+            i = from[i];
+        }
+        List<Integer> path = new ArrayList<>();
+        while (!stk.isEmpty()) {
+            path.add(stk.peek());
+            stk.pop();
+        }
+        return path;
+    }
+
+    private boolean hasPath(int[] from, int endPoint) {
+        return from[endPoint] == -1;
+    }
+
+    private void findPath(int i, int[] from, boolean[] isVisited) {
+        for (int index = 0; index < pointCount; index++) {
+            if (graph[i][index] && from[index] == -1 && !isVisited[index]) {
+                from[index] = i;
+                isVisited[index] = true;
+                findPath(index, from, isVisited);
+            }
+        }
+    }
+
+
 }

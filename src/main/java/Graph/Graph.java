@@ -1,6 +1,7 @@
 package Graph;
 
 import java.io.*;
+import java.util.List;
 
 abstract class Graph {
 
@@ -52,12 +53,11 @@ abstract class Graph {
         }
     }
 
-    /**
-     * @Description 深度优先遍历一张图
-     **/
     public abstract int dfs();
 
     public boolean isConnected(int point1, int point2) {
         return id[point1] == id[point2];
     }
+
+    public abstract List<Integer> path(int startPoint, int endPoint);
 }

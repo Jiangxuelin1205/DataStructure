@@ -2,6 +2,7 @@ package Graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class SparseGraph extends Graph {
 
@@ -101,5 +102,42 @@ public class SparseGraph extends Graph {
         }
     }
 
+    @Override
+    public List<Integer> path(int startPoint, int endPoint) {
+        int[] from = new int[pointCount];
+        for (int i = 0; i < pointCount; i++) {
+            from[i] = -1;
+        }
+        boolean[] isVisited = new boolean[pointCount];
+        isVisited[startPoint] = true;
+        findPath(startPoint, from, isVisited);
+        if (from[endPoint] == -1) {
+            return null;
+        }
+        Stack<Integer> stk = new Stack<>();
+        int i = endPoint;
+        while (from[i] != -1) {
+            stk.push(from[i]);
+            i = from[i];
+        }
+        List<Integer> result = new ArrayList<>();
+        while (!stk.isEmpty()) {
+            result.add(stk.peek());
+            stk.pop();
+        }
+        return result;
+    }
 
+    private void findPath(int startPoint, int[] from, boolean[] isVisited) {
+        if (graph.get(startPoint).size() == 0) {
+            return;
+        }
+        for (Integer index : graph.get(startPoint)) {
+            if (!isVisited[index] && from[index] == -1) {
+                from[index] = startPoint;
+                isVisited[startPoint] = true;
+                findPath(index, from, isVisited);
+            }
+        }
+    }
 }

@@ -47,7 +47,7 @@ public class DenseGraphTest {
     public void dfs_test() throws IOException, GraphException {
         DenseGraph graph = new DenseGraph();
         graph.readGraph("./src/main/java/Graph/graphProperties");
-        Assert.assertEquals(graph.dfs(),3);
+        Assert.assertEquals(graph.dfs(), 3);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class DenseGraphTest {
         DenseGraph graph = new DenseGraph();
         graph.readGraph("./src/main/java/Graph/graphProperties");
         graph.dfs();
-        Assert.assertTrue(graph.isConnected(1,3));
+        Assert.assertTrue(graph.isConnected(1, 3));
     }
 
     @Test
@@ -63,7 +63,21 @@ public class DenseGraphTest {
         DenseGraph graph = new DenseGraph();
         graph.readGraph("./src/main/java/Graph/graphProperties");
         graph.dfs();
-        Assert.assertFalse(graph.isConnected(0,3));
+        Assert.assertFalse(graph.isConnected(0, 3));
+    }
+
+    @Test
+    public void test_path() throws IOException, GraphException {
+        DenseGraph graph = new DenseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        graph.path(2, 3);
+    }
+
+    @Test
+    public void no_path() throws IOException, GraphException {
+        DenseGraph graph = new DenseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        Assert.assertNull(graph.path(0, 3));
     }
 
 }

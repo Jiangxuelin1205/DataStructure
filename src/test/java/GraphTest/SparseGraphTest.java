@@ -65,4 +65,18 @@ public class SparseGraphTest {
         graph.dfs();
         Assert.assertFalse(graph.isConnected(0,3));
     }
+
+    @Test
+    public void path() throws IOException, GraphException {
+        SparseGraph graph = new SparseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        graph.path(1,3);
+    }
+
+    @Test
+    public void no_path() throws IOException, GraphException {
+        SparseGraph graph = new SparseGraph();
+        graph.readGraph("./src/main/java/Graph/graphProperties");
+        Assert.assertNull(graph.path(0,3));
+    }
 }
