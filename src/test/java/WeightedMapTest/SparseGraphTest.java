@@ -36,4 +36,10 @@ public class SparseGraphTest {
         WeightedGraph graph = new SparseGraph("./src/main/java/WeightedMap/graphProperties.txt");
         Assert.assertEquals(graph.Kruscal(), 1.81, 0.01);
     }
+
+    @Test
+    public void Dijkstra() throws IOException {
+        WeightedGraph graph = new SparseGraph("./src/main/java/WeightedMap/graphProperties.txt");
+        graph.Dijkstra();
+    }
 }

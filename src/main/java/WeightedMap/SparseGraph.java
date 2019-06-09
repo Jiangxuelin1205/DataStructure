@@ -107,5 +107,47 @@ public class SparseGraph extends WeightedGraph {
         }
     }
 
+    @Override
+    public void Dijkstra() {
+        //存储路径
+        @SuppressWarnings("MismatchedReadAndWriteOfArray")
+        int[] from = new int[pointCount];
+        //存储从原点到每个点的权值
+        double[] weight = new double[pointCount];
+        //记录每个点是否被访问过
+        boolean[] isMarked = new boolean[pointCount];
+        PriorityQueue<Edge> q = new PriorityQueue<>(Comparator.comparingDouble(o -> o.weight));
+
+        //初始化from,weight,q
+        for (int i = 0; i < pointCount; i++) {
+            from[i] = -1;
+            weight[i] = Integer.MAX_VALUE;
+        }
+        weight[0] = 0;
+        q.add(new Edge(0, 0, 0));
+        from[0] = 0;
+
+        while (!q.isEmpty()) {
+            //noinspection ConstantConditions
+            Edge e = q.poll();
+            assert e != null;
+            isMarked[e.endPoint] = true;
+            for (Edge edge : graph.get(e.endPoint)) {
+                if (!isMarked[edge.endPoint]) {
+                    if (weight[e.endPoint] + edge.weight < weight[edge.endPoint]) {
+                        weight[edge.endPoint] = weight[e.endPoint] + edge.weight;
+                        from[e.endPoint] = e.endPoint;
+                        if (!q.contains(edge)) {
+                            q.add(edge);
+                        }
+                    }
+                }
+            }
+        }
+        for (double aWeight : weight) {
+            System.out.println(aWeight);
+        }
+    }
+
 
 }

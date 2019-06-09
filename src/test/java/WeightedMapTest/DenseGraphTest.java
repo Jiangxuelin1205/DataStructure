@@ -38,4 +38,10 @@ public class DenseGraphTest {
         WeightedGraph graph = new DenseGraph("./src/main/java/WeightedMap/graphProperties.txt");
         Assert.assertEquals(graph.Kruscal(), 1.81, 0.01);
     }
+
+    @Test
+    public void dijkstra() throws IOException {
+        WeightedGraph graph=new DenseGraph("./src/main/java/WeightedMap/graphProperties.txt");
+        graph.Dijkstra();
+    }
 }

@@ -92,4 +92,49 @@ public class DenseGraph extends WeightedGraph {
         }
     }
 
+    //Dijkstra算法,打印0节点到各个节点的最短路径
+    public void Dijkstra() {
+        //存储路径
+        @SuppressWarnings("MismatchedReadAndWriteOfArray")
+        int[] from = new int[pointCount];
+        //存储从原点到每个点的权值
+        double[] weight = new double[pointCount];
+        //记录每个点是否被访问过
+        boolean[] isMarked = new boolean[pointCount];
+        PriorityQueue<Edge> q = new PriorityQueue<>(Comparator.comparingDouble(o -> o.weight));
+
+        //初始化from,weight,q
+        for (int i = 0; i < pointCount; i++) {
+            if (graph[0][i] != null) {
+                weight[i] = Integer.MAX_VALUE;
+                from[i] = 0;
+            } else {
+                weight[i] = Integer.MAX_VALUE;
+                from[i] = -1;
+            }
+        }
+        weight[0] = 0;
+        q.add(new Edge(0, 0, 0));
+        from[0] = 0;
+        while (!q.isEmpty()) {
+            //noinspection ConstantConditions
+            Edge e = q.poll();
+            assert e != null;
+            isMarked[e.endPoint] = true;
+            for (int i = 0; i < pointCount; i++) {
+                if (graph[e.endPoint][i] != null && !isMarked[i]) {//有边
+                    if (weight[e.endPoint] + graph[e.endPoint][i].weight < weight[i]) {
+                        weight[i] = weight[e.endPoint] + graph[e.endPoint][i].weight;
+                        from[i] = e.endPoint;
+                        if (!q.contains(graph[e.endPoint][i])) {
+                            q.add(graph[e.endPoint][i]);
+                        }
+                    }
+                }
+            }
+        }
+        for (double aWeight : weight) {
+            System.out.println(aWeight);
+        }
+    }
 }

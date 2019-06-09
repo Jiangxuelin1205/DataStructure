@@ -103,4 +103,6 @@ public abstract class WeightedGraph {
             }
         }
     }
+
+    public abstract void Dijkstra();
 }
