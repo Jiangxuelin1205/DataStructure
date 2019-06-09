@@ -1,6 +1,7 @@
 package WeightedMap;
 
 import java.io.*;
+import java.util.*;
 
 public class DenseGraph extends WeightedGraph {
 
@@ -19,27 +20,42 @@ public class DenseGraph extends WeightedGraph {
     public DenseGraph(String path) throws IOException {
         InputStream in = new FileInputStream(path);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        //parse point and edge
+        parsePointAndEdge(reader);
+        parseIsDirected(reader);
+        createGraph();
+        parseEdges(reader);
+
+
+    }
+
+    private void parseEdges(BufferedReader reader) throws IOException {
         String line;
-        line = reader.readLine();
-        this.pointCount = Integer.valueOf(line.split(" ")[0]);
-        this.edgeCount = Integer.valueOf(line.split(" ")[1]);
-
-        //parse isDirected
-        line = reader.readLine();
-        this.isDirected = Boolean.parseBoolean(line);
-
-        //create graph
-        graph = new Edge[pointCount][pointCount];
-
-        //parse edges
         while ((line = reader.readLine()) != null) {
             int startPoint = Integer.valueOf(line.split(" ")[0]);
             int endPoint = Integer.valueOf(line.split(" ")[1]);
             double weight = Double.valueOf(line.split(" ")[2]);
-            Edge e = new Edge(startPoint, endPoint, weight);
-            graph[startPoint][endPoint] = e;
+            graph[startPoint][endPoint] = new Edge(startPoint, endPoint, weight);
+            if (!isDirected) {
+                graph[endPoint][startPoint] = new Edge(endPoint, startPoint, weight);
+            }
         }
+    }
+
+    private void createGraph() {
+        graph = new Edge[pointCount][pointCount];
+    }
+
+    private void parseIsDirected(BufferedReader reader) throws IOException {
+        String line;//parse isDirected
+        line = reader.readLine();
+        this.isDirected = Boolean.parseBoolean(line);
+    }
+
+    private void parsePointAndEdge(BufferedReader reader) throws IOException {
+        String line;
+        line = reader.readLine();
+        this.pointCount = Integer.valueOf(line.split(" ")[0]);
+        this.edgeCount = Integer.valueOf(line.split(" ")[1]);
     }
 
     @Override
@@ -58,4 +74,13 @@ public class DenseGraph extends WeightedGraph {
         edgeCount++;
     }
 
+    public void visit(int index, PriorityQueue<Edge> q, boolean[] marked) {
+        marked[index] = true;
+        //遍历该节点的所有连接点，并且入队
+        for (int i = 0; i < pointCount; i++) {
+            if (graph[index][i] != null) {
+                q.add(graph[index][i]);
+            }
+        }
+    }
 }

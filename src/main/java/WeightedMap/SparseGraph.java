@@ -1,8 +1,7 @@
 package WeightedMap;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SparseGraph extends WeightedGraph {
 
@@ -41,6 +40,9 @@ public class SparseGraph extends WeightedGraph {
             int endPoint = Integer.valueOf(line.split(" ")[1]);
             double weight = Double.valueOf(line.split(" ")[2]);
             graph.get(startPoint).add(new Edge(startPoint, endPoint, weight));
+            if (!isDirected) {
+                graph.get(endPoint).add(new Edge(endPoint, startPoint, weight));
+            }
         }
     }
 
@@ -84,7 +86,20 @@ public class SparseGraph extends WeightedGraph {
             }
         }
         graph.get(edge.startPoint).add(edge);
+        if (!isDirected) {
+            graph.get(edge.endPoint).add(edge);
+        }
         edgeCount++;
     }
+
+    public void visit(int index, PriorityQueue<Edge> q, boolean[] marked) {
+        marked[index] = true;
+       for(Edge e:graph.get(index)){
+           if(e!=null){
+               q.add(e);
+           }
+       }
+    }
+
 
 }

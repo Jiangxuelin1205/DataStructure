@@ -1,5 +1,6 @@
 package WeightedMapTest;
 
+import WeightedMap.DenseGraph;
 import WeightedMap.Edge;
 import WeightedMap.SparseGraph;
 import WeightedMap.WeightedGraph;
@@ -23,5 +24,11 @@ public class SparseGraphTest {
         WeightedGraph graph = new SparseGraph("./src/main/java/WeightedMap/graphProperties.txt");
         Assert.assertEquals(graph.pointCount(), 6);
         Assert.assertEquals(graph.edgeCount(), 6);
+    }
+
+    @Test
+    public void primGraph() throws IOException {
+        WeightedGraph graph=new SparseGraph("./src/main/java/WeightedMap/graphProperties.txt");
+        Assert.assertEquals(graph.getPrimTree(),1.81,0.01);
     }
 }

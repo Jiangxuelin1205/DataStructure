@@ -6,7 +6,6 @@ import WeightedMap.WeightedGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class DenseGraphTest {
@@ -24,9 +23,13 @@ public class DenseGraphTest {
     @Test
     public void read_graph() throws IOException {
         WeightedGraph graph = new DenseGraph("./src/main/java/WeightedMap/graphProperties.txt");
-        Assert.assertEquals(graph.edgeCount(), 6);
-        Assert.assertEquals(graph.pointCount(), 6);
+        Assert.assertEquals(graph.edgeCount(), 16);
+        Assert.assertEquals(graph.pointCount(), 8);
     }
 
-
+    @Test
+    public void primGraph() throws IOException {
+        WeightedGraph graph=new DenseGraph("./src/main/java/WeightedMap/graphProperties.txt");
+        Assert.assertEquals(graph.getPrimTree(),1.81,0.01);
+    }
 }
