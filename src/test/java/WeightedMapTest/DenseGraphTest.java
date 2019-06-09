@@ -28,8 +28,14 @@ public class DenseGraphTest {
     }
 
     @Test
-    public void primGraph() throws IOException {
-        WeightedGraph graph=new DenseGraph("./src/main/java/WeightedMap/graphProperties.txt");
-        Assert.assertEquals(graph.getPrimTree(),1.81,0.01);
+    public void prim() throws IOException {
+        WeightedGraph graph = new DenseGraph("./src/main/java/WeightedMap/graphProperties.txt");
+        Assert.assertEquals(graph.getPrimTree(), 1.81, 0.01);
+    }
+
+    @Test
+    public void kruscal() throws IOException {
+        WeightedGraph graph = new DenseGraph("./src/main/java/WeightedMap/graphProperties.txt");
+        Assert.assertEquals(graph.Kruscal(), 1.81, 0.01);
     }
 }

@@ -24,8 +24,6 @@ public class DenseGraph extends WeightedGraph {
         parseIsDirected(reader);
         createGraph();
         parseEdges(reader);
-
-
     }
 
     private void parseEdges(BufferedReader reader) throws IOException {
@@ -83,4 +81,15 @@ public class DenseGraph extends WeightedGraph {
             }
         }
     }
+
+    void addQueue(PriorityQueue<Edge> q) {
+        for (int row = 0; row < pointCount; row++) {
+            for (int column = 0; column < pointCount; column++) {
+                if (row < column && graph[row][column] != null) {
+                    q.add(graph[row][column]);
+                }
+            }
+        }
+    }
+
 }

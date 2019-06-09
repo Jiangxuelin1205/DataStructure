@@ -94,11 +94,17 @@ public class SparseGraph extends WeightedGraph {
 
     public void visit(int index, PriorityQueue<Edge> q, boolean[] marked) {
         marked[index] = true;
-       for(Edge e:graph.get(index)){
-           if(e!=null){
-               q.add(e);
-           }
-       }
+        for (Edge e : graph.get(index)) {
+            if (e != null) {
+                q.add(e);
+            }
+        }
+    }
+
+    void addQueue(PriorityQueue<Edge> q) {
+        for (int row = 0; row < pointCount; row++) {
+            q.addAll(graph.get(row));
+        }
     }
 
 
