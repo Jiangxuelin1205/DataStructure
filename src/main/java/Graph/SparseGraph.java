@@ -154,17 +154,13 @@ public class SparseGraph extends Graph {
                 bfs(i, isVisited, from, q);
             }
         }
-
-        for (int i = 0; i < from.length; i++) {
-            System.out.println(from[i]);
-        }
     }
 
     private void bfs(int startPoint, boolean[] isVisited, int[] from, Queue<Integer> q) {
         isVisited[startPoint] = true;
         q.offer(startPoint);
         while (!q.isEmpty()) {
-            int i = q.poll();
+            @SuppressWarnings("ConstantConditions") int i = q.poll();
             for (Integer point : graph.get(i)) {
                 if (!isVisited[point]) {
                     isVisited[point] = true;
