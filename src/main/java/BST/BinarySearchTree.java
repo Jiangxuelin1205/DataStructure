@@ -1,5 +1,7 @@
-package BinarySearchTree;
+package BST;
 
+
+import LinkedList.ListNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +140,7 @@ public class BinarySearchTree {
 
     public List<TreeNode> preOrderNonRecursive() {
         Stack<TreeNode> stack = new Stack<TreeNode>();
-        List<TreeNode> result=new ArrayList();
+        List<TreeNode> result = new ArrayList<>();
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
@@ -153,11 +155,48 @@ public class BinarySearchTree {
         return result;
     }
 
-    public void inOrderNonRecursive(){
-
+    public List<TreeNode> inOrderNonRecursive() {
+        Stack<TreeNode> stack = new Stack<>();
+        List<TreeNode> result = new ArrayList<>();
+        TreeNode currentNode = root;
+        if (root == null) {
+            return result;
+        }
+        while (currentNode != null || !stack.isEmpty()) {
+            if (currentNode != null) {
+                stack.push(currentNode);
+                currentNode = currentNode.left;
+            } else {
+                currentNode = stack.pop();
+                result.add(currentNode);
+                currentNode = currentNode.right;
+            }
+        }
+        return result;
     }
 
-    public void getPredecessor(int x) {
+    public List<TreeNode> postOrderNonRecursive() {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> output = new Stack<>();
+        List<TreeNode> result = new ArrayList<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            output.add(node);
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+        }
+        while (!output.isEmpty()) {
+            result.add(output.pop());
+        }
+        return result;
+    }
+
+    public TreeNode getPredecessor(int x) {
         //求前驱节点和后继节点的方法很类似
         TreeNode firstTurnRight = null;
         TreeNode parent = null;
@@ -175,12 +214,12 @@ public class BinarySearchTree {
                 current = current.right;
             }
         }
-        //todo:get predecessor undone
         if (current != null && current.left != null) {
-
+            return getMaximum(current.left);
         } else if (parent != null && parent.right == current) {
-
+            return parent;
         } else {
+            return firstTurnRight;
         }
     }
 

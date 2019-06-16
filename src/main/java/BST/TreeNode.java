@@ -1,10 +1,10 @@
-package BinarySearchTree;
+package BST;
 
-class TreeNode {
+public class TreeNode {
 
     TreeNode left;
     TreeNode right;
-    int val;
+    public int val;
 
     TreeNode(int val) {
         this.val = val;
