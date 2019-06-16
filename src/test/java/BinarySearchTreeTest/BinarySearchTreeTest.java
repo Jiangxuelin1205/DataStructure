@@ -30,7 +30,7 @@ public class BinarySearchTreeTest {
         b.insert(1);
         b.insert(2);
         b.insert(4);
-        Assert.assertEquals(b.getMinum(), 1);
+        Assert.assertEquals(b.getMinimum(), 1);
     }
 
     @Test

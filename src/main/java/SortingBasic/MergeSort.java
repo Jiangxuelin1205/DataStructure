@@ -34,9 +34,7 @@ public class MergeSort {
         while (j <= last && k <= last) {
             aux[k++] = arr[j++];
         }
-        for (int start = first; start <= last; start++) {
-            arr[start] = aux[start];
-        }
+        System.arraycopy(aux, first, arr, first, last + 1 - first);
         System.out.println("merge is " + Arrays.toString(arr));
     }
 }

@@ -58,7 +58,7 @@ public class BinarySearchTree {
     }
 
 
-    public int getMinum() {
+    public int getMinimum() {
         return getMinimum(root).val;
     }
 
@@ -81,7 +81,7 @@ public class BinarySearchTree {
     }
 
 
-    public TreeNode getPredecessor(int x) {
+    public void getPredecessor(int x) {
         //求前驱节点和后继节点的方法很类似
         TreeNode firstTurnRight = null;
         TreeNode parent = null;
@@ -99,12 +99,10 @@ public class BinarySearchTree {
                 current = current.right;
             }
         }
+        //todo:get predecessor undone
         if (current != null && current.left != null) {
-            return getMaximum(current.left);
         } else if (parent != null && parent.right == current) {
-            return parent;
         } else {
-            return firstTurnRight;
         }
     }
 
