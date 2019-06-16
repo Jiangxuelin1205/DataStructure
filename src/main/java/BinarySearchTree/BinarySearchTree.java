@@ -1,39 +1,39 @@
 package BinarySearchTree;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 public class BinarySearchTree {
 
     private TreeNode root;
 
-    public BinarySearchTree() {
-    }
-
-
-    public BinarySearchTree(int[] numbers) {
+    public void build(int[] numbers) {
         for (int number : numbers) {
-            insert(number);
+            insertNonRecursive(number);
         }
     }
 
-
-    public void insert(int x) {
+    //二叉树插入的非递归实现
+    public void insertNonRecursive(int e) {
         if (root == null) {
-            root = new TreeNode(x);
+            root = new TreeNode(e);
         }
         TreeNode current = root;
         TreeNode parent;
         while (true) {
             parent = current;
-            if (x < current.val) {
+            if (e < current.val) {
                 current = current.left;
                 if (current == null) {
-                    parent.left = new TreeNode(x);
+                    parent.left = new TreeNode(e);
                     return;
                 }
-            } else if (x > current.val) {
+            } else if (e > current.val) {
                 current = current.right;
                 if (current == null) {
-                    parent.right = new TreeNode(x);
+                    parent.right = new TreeNode(e);
                     return;
                 }
             } else {
@@ -42,21 +42,41 @@ public class BinarySearchTree {
         }
     }
 
-
-    public TreeNode search(int x) {
-        TreeNode treeNode = root;
-        while (treeNode != null) {
-            if (x < treeNode.val) {
-                treeNode = treeNode.left;
-            } else if (x > treeNode.val) {
-                treeNode = treeNode.right;
-            } else {
-                return treeNode;
-            }
-        }
-        return null;
+    public void insertRecursively(int e) {
+        root = insertRecursively(root, e);
     }
 
+    //二叉树插入的递归实现
+    private TreeNode insertRecursively(TreeNode root, int e) {
+        if (root == null) {
+            root = new TreeNode(e);
+            return root;
+        }
+
+        if (e < root.val) {
+            root.left = insertRecursively(root.left, e);
+        } else if (e > root.val) {
+            root.right = insertRecursively(root.right, e);
+        }
+        return root;
+    }
+
+    public boolean contains(int e) {
+        return contains(root, e);
+    }
+
+    private boolean contains(TreeNode root, int e) {
+        if (root == null) {
+            return false;
+        }
+        if (e < root.val) {
+            return contains(root.left, e);
+        } else if (e > root.val) {
+            return contains(root.right, e);
+        } else {
+            return true;
+        }
+    }
 
     public int getMinimum() {
         return getMinimum(root).val;
@@ -80,6 +100,62 @@ public class BinarySearchTree {
         return treeNode;
     }
 
+    public void preOrder() {
+        preOrder(root);
+    }
+
+    private void preOrder(TreeNode root) {
+        if (root != null) {
+            System.out.println(root.val);
+            preOrder(root.left);
+            preOrder(root.right);
+        }
+    }
+
+    public void inOrder() {
+        inOrder(root);
+    }
+
+    private void inOrder(TreeNode root) {
+        if (root != null) {
+            inOrder(root.left);
+            System.out.println(root.val);
+            inOrder(root.right);
+        }
+    }
+
+    private void postOrder() {
+        postOrder(root);
+    }
+
+    private void postOrder(TreeNode root) {
+        if (root != null) {
+            inOrder(root.left);
+            inOrder(root.right);
+            System.out.println(root.val);
+        }
+    }
+
+    public List<TreeNode> preOrderNonRecursive() {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        List<TreeNode> result=new ArrayList();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            result.add(node);
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+        }
+        return result;
+    }
+
+    public void inOrderNonRecursive(){
+
+    }
 
     public void getPredecessor(int x) {
         //求前驱节点和后继节点的方法很类似
@@ -101,7 +177,9 @@ public class BinarySearchTree {
         }
         //todo:get predecessor undone
         if (current != null && current.left != null) {
+
         } else if (parent != null && parent.right == current) {
+
         } else {
         }
     }
@@ -132,17 +210,6 @@ public class BinarySearchTree {
         }
     }
 
-    public void inOrder() {
-        inOrder(root);
-    }
-
-    private void inOrder(TreeNode root) {
-        if (root != null) {
-            inOrder(root.left);
-            System.out.println(root.val);
-            inOrder(root.right);
-        }
-    }
 
     /**
      * @Description 删除节点的三种情况：如果该节点没有左子树：
