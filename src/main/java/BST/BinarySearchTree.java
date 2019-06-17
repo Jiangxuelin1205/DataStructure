@@ -1,8 +1,6 @@
 package BST;
 
 
-import LinkedList.ListNode;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -80,26 +78,59 @@ public class BinarySearchTree {
         }
     }
 
-    public int getMinimum() {
-        return getMinimum(root).val;
+    public TreeNode minimum() {
+        return minimum(root);
     }
 
-    private TreeNode getMinimum(TreeNode treeNode) {
+    private TreeNode minimum(TreeNode treeNode) {
         while (treeNode.left != null) {
             treeNode = treeNode.left;
         }
         return treeNode;
     }
 
-    public int getMaximum() {
-        return getMaximum(root).val;
+    public int removeMinimum() {
+        int minimum = minimum().val;
+        root = removeMinimum(root);
+        return minimum;
     }
 
-    private TreeNode getMaximum(TreeNode treeNode) {
+    private TreeNode removeMinimum(TreeNode root) {
+        //删除以root为根的最小值节点,最小节点为该节点的左子树的最右节点
+        if (root.left == null) {
+            TreeNode rightNode = root.right;
+            root.right = null;
+            return rightNode;
+        }
+        root.left = removeMinimum(root.left);
+        return root;
+    }
+
+    public TreeNode maximum() {
+        return maximum(root);
+    }
+
+    private TreeNode maximum(TreeNode treeNode) {
         while (treeNode.right != null) {
             treeNode = treeNode.right;
         }
         return treeNode;
+    }
+
+    public int removeMaximum() {
+        int maximum = maximum().val;
+        root = removeMaximum(root);
+        return maximum;
+    }
+
+    private TreeNode removeMaximum(TreeNode root) {
+        if (root.right == null) {
+            TreeNode leftNode = root.left;
+            root.left = null;
+            return leftNode;
+        }
+        root.right = removeMaximum(root.right);
+        return root;
     }
 
     public void preOrder() {
@@ -139,7 +170,7 @@ public class BinarySearchTree {
     }
 
     public List<TreeNode> preOrderNonRecursive() {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
         List<TreeNode> result = new ArrayList<>();
         stack.push(root);
         while (!stack.isEmpty()) {
@@ -176,7 +207,7 @@ public class BinarySearchTree {
     }
 
     public List<TreeNode> postOrderNonRecursive() {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
         Stack<TreeNode> output = new Stack<>();
         List<TreeNode> result = new ArrayList<>();
         stack.push(root);
@@ -215,7 +246,7 @@ public class BinarySearchTree {
             }
         }
         if (current != null && current.left != null) {
-            return getMaximum(current.left);
+            return maximum(current.left);
         } else if (parent != null && parent.right == current) {
             return parent;
         } else {
@@ -241,7 +272,7 @@ public class BinarySearchTree {
             }
         }
         if (current != null && current.right != null) {
-            return getMinimum(current.right);
+            return minimum(current.right);
         } else if (parent != null && parent.left == current) {
             return parent;
         } else {
@@ -249,77 +280,45 @@ public class BinarySearchTree {
         }
     }
 
+    public void remove(int e) {
+        this.root = remove(root, e);
+    }
 
     /**
-     * @Description 删除节点的三种情况：如果该节点没有左子树：
-     * 被删除节点是根节点，则将根指针指向该节点的子节点；
-     * 被删除的是叶节点，则直接删除叶节点；
-     * 被删除的是中间节点：则将该节点的父节点指向该节点的子节点
-     * 如果被删除的节点没有右子树：
-     * 被删除的节点是根节点，则将根节点的指针向下指到根节点的子节点；
-     * 被删除的是叶节点，则直接删除
-     * 被删除的是中间节点，则将该节点的父节点指向该节点的子节点。
-     * 如果被删除的节点既有左子树也有右子树：
-     * 找到该节点的前驱节点，将该节点与前驱节点交换位置，之后删掉前驱节点。
-     * 该节点的前驱节点即为左子树上最大的节点。（因为此时该节点有左子树）
-     **/
-    public boolean delete(int x) {
-        //找到被删除节点，并且记录该节点的父节点。
-        TreeNode parent = null;
-        TreeNode current = root;
-        while (current != null) {
-            if (current.val == x) {
-                break;
-            }
-            parent = current;
-            if (x < current.val) {
-                current = current.left;
-            } else {
-                current = current.right;
-            }
+     * 移除操作分为三种情况：被移除的节点有左孩子；被移除的节点有有孩子；
+     * 被移除的节点有左右孩子
+     */
+    private TreeNode remove(TreeNode root, int e) {
+        if (root == null) {
+            return null;
         }
+        if (e < root.val) {
+            root.left = remove(root.left, e);
+            return root;
+        } else if (e > root.val) {
+            root.right = remove(root.right, e);
+            return root;
+        } else {//e==root.val
+            if (root.left == null) {
+                TreeNode rightNode = root.right;
+                root.right = null;
+                return rightNode;
+            } else if (root.right == null) {
+                TreeNode leftNode = root.left;
+                root.left = null;
+                return leftNode;
+            } else {
+                //找到该节点的后继节点代替该节点
+                //后继节点为该节点右子树的最小节点
+                TreeNode successor = minimum(root.right);
+                successor.left = root.left;
+                successor.right = removeMinimum(root.right);
 
-        if (current == null) {
-            return false;
+                root.left = null;
+                root.right = null;
+
+                return successor;
+            }
         }
-        if (current.left == null) {
-            if (parent == null) {//删除的是根节点
-                root = root.right;
-            } else if (current.right == null) {//删除的是叶节点
-                if (parent.left == current) {
-                    parent.left = null;
-                }
-                if (parent.right == current) {
-                    parent.right = null;
-                }
-            } else {
-                if (parent.left == current) {
-                    parent.left = current.right;
-                } else if (parent.right == current) {
-                    parent.right = current.right;
-                }
-            }
-        } else if (current.right == null) {
-            if (parent == null) {
-                root = root.left;
-            } else {
-                if (parent.left == current) {
-                    parent.left = current.left;
-                } else if (parent.right == current) {
-                    parent.right = current.left;
-                }
-            }
-        } else {//既有左子树又有右子树
-            //找到左子树中的最大的数，与current的值进行交换，之后删除左子树最大值节点
-            TreeNode leftMax = current.right;
-            TreeNode leftMaxParent = current;
-            while (leftMax.right != null) {
-                leftMaxParent = leftMax;
-                leftMax = leftMax.right;
-            }
-            current.val = leftMax.val;
-            leftMaxParent.right = null;
-        }
-        return true;
     }
 }

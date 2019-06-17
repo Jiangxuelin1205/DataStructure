@@ -44,7 +44,7 @@ public class BinarySearchTreeTest {
         b.insertNonRecursive(1);
         b.insertNonRecursive(2);
         b.insertNonRecursive(4);
-        Assert.assertEquals(b.getMinimum(), 1);
+        Assert.assertEquals(b.minimum().val, 1);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class BinarySearchTreeTest {
         b.insertNonRecursive(1);
         b.insertNonRecursive(2);
         b.insertNonRecursive(4);
-        Assert.assertEquals(b.getMaximum(), 4);
+        Assert.assertEquals(b.maximum().val, 4);
     }
 
     @Test
@@ -156,30 +156,57 @@ public class BinarySearchTreeTest {
     }
 
     @Test
-    public void delete_fail_test() {
+    public void remove_minimum(){
+        int[] numbers = new int[]{
+                3, 1, 2, 5, 4
+        };
         BinarySearchTree b = new BinarySearchTree();
-        Assert.assertFalse(b.delete(3));
+        b.build(numbers);
+        Assert.assertEquals(b.removeMinimum(),1);
+        Assert.assertFalse(b.contains(1));
     }
 
     @Test
-    public void delete_success_test() {
+    public void remove_maximum(){
+        int[] numbers = new int[]{
+                3, 1, 2, 5, 4
+        };
+        BinarySearchTree b = new BinarySearchTree();
+        b.build(numbers);
+        Assert.assertEquals( b.removeMaximum(),5);
+        Assert.assertFalse(b.contains(5));
+    }
+
+    @Test
+    public void remove_fail() {
+        int[] numbers = new int[]{
+                3, 1, 2, 5, 4
+        };
+        BinarySearchTree b = new BinarySearchTree();
+        b.build(numbers);
+        b.remove(8);
+        Assert.assertTrue(b.contains(3));
+    }
+
+    @Test
+    public void remove_success() {
         int[] numbers = new int[]{
                 1, 2, 3, 4, 5
         };
         BinarySearchTree b = new BinarySearchTree();
         b.build(numbers);
-        b.delete(3);
-        b.inOrder();
+        b.remove(3);
+        Assert.assertFalse(b.contains(3));
     }
 
     @Test
-    public void delete_success_test2() {
+    public void remove_root() {
         int[] numbers = new int[]{
                 1, 2, 3, 4, 5
         };
         BinarySearchTree b = new BinarySearchTree();
         b.build(numbers);
-        b.delete(1);
-        b.inOrder();
+        b.remove(1);
+        Assert.assertFalse(b.contains(1));
     }
 }
