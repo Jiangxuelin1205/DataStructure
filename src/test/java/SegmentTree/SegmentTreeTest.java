@@ -20,7 +20,7 @@ public class SegmentTreeTest {
                 2, 4, 1, 6, 8
         };
         SegmentTree<Integer> tree = new SegmentTree<Integer>(data, (a, b) -> a + b);
-        Assert.assertEquals(tree.getSize(),data.length);
+        Assert.assertEquals(tree.getSize(), data.length);
     }
 
     @Test
@@ -29,48 +29,58 @@ public class SegmentTreeTest {
                 2, 4, 1, 6, 8
         };
         SegmentTree<Integer> tree = new SegmentTree<Integer>(data, (a, b) -> a + b);
-        int index=3;
-        int result=tree.get(index);
-        Assert.assertEquals(result,6);
+        int index = 3;
+        int result = tree.get(index);
+        Assert.assertEquals(result, 6);
     }
 
     @Test
-    public void query(){
+    public void query() {
         Integer[] data = new Integer[]{
                 2, 4, 1, 6, 8
         };
         SegmentTree<Integer> tree = new SegmentTree<Integer>(data, (a, b) -> a + b);
-        int result=tree.query(0,4);
-        Assert.assertEquals(result,21);
+        int result = tree.query(0, 4);
+        Assert.assertEquals(result, 21);
     }
 
     @Test
-    public void query_left_equals_right(){
+    public void query_left_equals_right() {
         Integer[] data = new Integer[]{
                 2, 4, 1, 6, 8
         };
         SegmentTree<Integer> tree = new SegmentTree<Integer>(data, (a, b) -> a + b);
-        int result=tree.query(0,0);
-        Assert.assertEquals(result,2);
+        int result = tree.query(0, 0);
+        Assert.assertEquals(result, 2);
     }
 
     @Test
-    public void query_left_equals_right2(){
+    public void query_left_equals_right2() {
         Integer[] data = new Integer[]{
                 2, 4, 1, 6, 8
         };
         SegmentTree<Integer> tree = new SegmentTree<Integer>(data, (a, b) -> a + b);
-        int result=tree.query(3,3);
-        Assert.assertEquals(result,6);
+        int result = tree.query(3, 3);
+        Assert.assertEquals(result, 6);
     }
 
     @Test
-    public void query_separate_segment(){
+    public void query_separate_segment() {
         Integer[] data = new Integer[]{
                 2, 4, 1, 6, 8
         };
         SegmentTree<Integer> tree = new SegmentTree<Integer>(data, (a, b) -> a + b);
-        int result=tree.query(1,3);
-        Assert.assertEquals(result,11);
+        int result = tree.query(1, 3);
+        Assert.assertEquals(result, 11);
+    }
+
+    @Test
+    public void set() {
+        Integer[] data = new Integer[]{
+                2, 4, 1, 6, 8
+        };
+        SegmentTree<Integer> tree = new SegmentTree<Integer>(data, (a, b) -> a + b);
+        tree.set(2, 10);
+        System.out.println(tree.toString());
     }
 }

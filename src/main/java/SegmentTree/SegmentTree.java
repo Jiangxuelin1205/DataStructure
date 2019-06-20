@@ -39,6 +39,7 @@ public class SegmentTree<E> {
         return query(0, 0, data.length - 1, queryL, queryR);
     }
 
+    //l和r分别为以treeIndex为根的节点代表的区间是[l...r]
     private E query(int treeIndex, int l, int r, int queryL, int queryR) {
         //递归到底的情况,即，如果查询的区间刚好是当前的区间，树在该区间的值
         if (l == queryL && r == queryR) {
@@ -58,6 +59,31 @@ public class SegmentTree<E> {
         E leftResult = query(leftChild, l, middle, queryL, middle);
         E rightResult = query(rightChild, middle + 1, r, middle + 1, queryR);
         return this.merger.merge(leftResult, rightResult);
+    }
+
+    void set(int index, E e) {
+        if (index < 0 || index >= data.length) {
+            throw new IllegalArgumentException("参数不合法");
+        }
+        data[index] = e;
+        set(0, 0, data.length - 1, index, e);
+    }
+
+    private void set(int treeIndex, int l, int r, int index, E e) {
+        if (l == r) {
+            tree[treeIndex] = e;
+            return;
+        }
+        int middle = l + (r - l) / 2;
+        int leftChild = leftChild(treeIndex);
+        int rightChild = rightChild(treeIndex);
+
+        if (index <= middle) {
+            set(leftChild, l, middle, index, e);
+        } else {
+            set(rightChild, middle + 1, r, index, e);
+        }
+        tree[treeIndex] = this.merger.merge(tree[leftChild], tree[rightChild]);
     }
 
     int getSize() {
