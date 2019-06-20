@@ -1,4 +1,4 @@
-package BST;
+package BSTTest;
 
 
 import java.util.ArrayList;

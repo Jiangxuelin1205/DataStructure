@@ -1,4 +1,4 @@
-package BST;
+package BSTTest;
 
 public class TreeNode {
 

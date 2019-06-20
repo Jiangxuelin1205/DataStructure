@@ -1,7 +1,5 @@
-package BinarySearchTreeTest;
+package BSTTest;
 
-import BST.BinarySearchTree;
-import BST.TreeNode;
 import org.junit.Assert;
 import org.junit.Test;
 
