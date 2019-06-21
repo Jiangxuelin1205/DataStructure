@@ -89,5 +89,4 @@ public class TrieTest {
         trie.add("pan");
         Assert.assertFalse(trie.isPrefixRecursive("pant"));
     }
-
 }
