@@ -29,6 +29,7 @@ public class WordDictionary {
      */
     public void addWord(String word) {
         Node cur = root;
+        //noinspection Duplicates
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             if (!cur.next.containsKey(c)) {
@@ -76,11 +77,4 @@ public class WordDictionary {
         return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
     }
 
-    public void getRoot(){
-//        System.out.println(root.next.get('b'));
-        Node node=root.next.get('b');
-        for(Character ch:node.next.keySet()){
-            System.out.println(ch);
-        }
-    }
 }
