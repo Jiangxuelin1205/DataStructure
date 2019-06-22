@@ -1,5 +1,7 @@
 package Trie;
 
+import com.sun.istack.internal.Nullable;
+
 import java.util.TreeMap;
 
 public class Trie {
@@ -65,15 +67,11 @@ public class Trie {
     }
 
     public boolean contains(String word) {
-        Node cur = root;
-        for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            if (!cur.next.containsKey(c)) {
-                return false;
-            }
-            cur = cur.next.get(c);
+        Node node = getNode(word);
+        if (node == null) {
+            return false;
         }
-        return cur.isWord;
+        return node.isWord;
     }
 
     public boolean containsRecursive(String word) {
@@ -94,15 +92,21 @@ public class Trie {
     }
 
     public boolean isPrefix(String prefix) {
+        Node node = getNode(prefix);
+        return node != null;
+    }
+
+    @Nullable
+    private Node getNode(String word) {
         Node cur = root;
-        for (int i = 0; i < prefix.length(); i++) {
-            char c = prefix.charAt(i);
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
             if (!cur.next.containsKey(c)) {
-                return false;
+                return null;
             }
             cur = cur.next.get(c);
         }
-        return true;
+        return cur;
     }
 
     public boolean isPrefixRecursive(String prefix) {
