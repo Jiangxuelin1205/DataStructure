@@ -1,4 +1,4 @@
-package BSTTest;
+package BST;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,18 +19,18 @@ public class BinarySearchTreeTest {
     @Test
     public void insert_test() {
         BinarySearchTree b = new BinarySearchTree();
-        b.insertNonRecursive(3);
-        b.insertNonRecursive(5);
-        b.insertNonRecursive(4);
+        b.addNonRecursive(3);
+        b.addNonRecursive(5);
+        b.addNonRecursive(4);
         b.inOrder();
     }
 
     @Test
     public void insert_recursively_test() {
         BinarySearchTree b = new BinarySearchTree();
-        b.insertRecursively(3);
-        b.insertRecursively(5);
-        b.insertRecursively(4);
+        b.addRecursive(3);
+        b.addRecursive(5);
+        b.addRecursive(4);
         b.inOrder();
     }
 
@@ -38,40 +38,40 @@ public class BinarySearchTreeTest {
     @Test
     public void getMinimum_test() {
         BinarySearchTree b = new BinarySearchTree();
-        b.insertNonRecursive(3);
-        b.insertNonRecursive(1);
-        b.insertNonRecursive(2);
-        b.insertNonRecursive(4);
+        b.addNonRecursive(3);
+        b.addNonRecursive(1);
+        b.addNonRecursive(2);
+        b.addNonRecursive(4);
         Assert.assertEquals(b.minimum().val, 1);
     }
 
     @Test
     public void getMaximum_test() {
         BinarySearchTree b = new BinarySearchTree();
-        b.insertNonRecursive(3);
-        b.insertNonRecursive(1);
-        b.insertNonRecursive(2);
-        b.insertNonRecursive(4);
+        b.addNonRecursive(3);
+        b.addNonRecursive(1);
+        b.addNonRecursive(2);
+        b.addNonRecursive(4);
         Assert.assertEquals(b.maximum().val, 4);
     }
 
     @Test
     public void contains() {
         BinarySearchTree b = new BinarySearchTree();
-        b.insertNonRecursive(3);
-        b.insertNonRecursive(1);
-        b.insertNonRecursive(2);
-        b.insertNonRecursive(4);
+        b.addNonRecursive(3);
+        b.addNonRecursive(1);
+        b.addNonRecursive(2);
+        b.addNonRecursive(4);
         Assert.assertTrue(b.contains(3));
     }
 
     @Test
     public void donot_contain() {
         BinarySearchTree b = new BinarySearchTree();
-        b.insertNonRecursive(3);
-        b.insertNonRecursive(1);
-        b.insertNonRecursive(2);
-        b.insertNonRecursive(4);
+        b.addNonRecursive(3);
+        b.addNonRecursive(1);
+        b.addNonRecursive(2);
+        b.addNonRecursive(4);
         Assert.assertFalse(b.contains(5));
     }
 

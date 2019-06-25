@@ -1,4 +1,4 @@
-package BSTTest;
+package BST;
 
 
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ public class BinarySearchTree {
 
     private TreeNode root;
 
-    public void build(int[] numbers) {
+    void build(int[] numbers) {
         for (int number : numbers) {
-            insertNonRecursive(number);
+            addNonRecursive(number);
         }
     }
 
     //二叉树插入的非递归实现
-    public void insertNonRecursive(int e) {
+    void addNonRecursive(int e) {
         if (root == null) {
             root = new TreeNode(e);
         }
@@ -42,26 +42,26 @@ public class BinarySearchTree {
         }
     }
 
-    public void insertRecursively(int e) {
-        root = insertRecursively(root, e);
+    void addRecursive(int e) {
+        root = addRecursive(root, e);
     }
 
     //二叉树插入的递归实现
-    private TreeNode insertRecursively(TreeNode root, int e) {
-        if (root == null) {
-            root = new TreeNode(e);
-            return root;
+    private TreeNode addRecursive(TreeNode node, int e) {
+        if (node == null) {
+            node = new TreeNode(e);
+            return node;
         }
 
-        if (e < root.val) {
-            root.left = insertRecursively(root.left, e);
-        } else if (e > root.val) {
-            root.right = insertRecursively(root.right, e);
+        if (e < node.val) {
+            node.left = addRecursive(node.left, e);
+        } else if (e > node.val) {
+            node.right = addRecursive(node.right, e);
         }
-        return root;
+        return node;
     }
 
-    public boolean contains(int e) {
+    boolean contains(int e) {
         return contains(root, e);
     }
 
@@ -78,7 +78,7 @@ public class BinarySearchTree {
         }
     }
 
-    public TreeNode minimum() {
+    TreeNode minimum() {
         return minimum(root);
     }
 
@@ -89,7 +89,7 @@ public class BinarySearchTree {
         return treeNode;
     }
 
-    public int removeMinimum() {
+    int removeMinimum() {
         int minimum = minimum().val;
         root = removeMinimum(root);
         return minimum;
@@ -106,7 +106,7 @@ public class BinarySearchTree {
         return root;
     }
 
-    public TreeNode maximum() {
+    TreeNode maximum() {
         return maximum(root);
     }
 
@@ -117,7 +117,7 @@ public class BinarySearchTree {
         return treeNode;
     }
 
-    public int removeMaximum() {
+    int removeMaximum() {
         int maximum = maximum().val;
         root = removeMaximum(root);
         return maximum;
@@ -145,7 +145,7 @@ public class BinarySearchTree {
         }
     }
 
-    public void inOrder() {
+    void inOrder() {
         inOrder(root);
     }
 
@@ -169,7 +169,7 @@ public class BinarySearchTree {
         }
     }
 
-    public List<TreeNode> preOrderNonRecursive() {
+    List<TreeNode> preOrderNonRecursive() {
         Stack<TreeNode> stack = new Stack<>();
         List<TreeNode> result = new ArrayList<>();
         stack.push(root);
@@ -186,7 +186,7 @@ public class BinarySearchTree {
         return result;
     }
 
-    public List<TreeNode> inOrderNonRecursive() {
+    List<TreeNode> inOrderNonRecursive() {
         Stack<TreeNode> stack = new Stack<>();
         List<TreeNode> result = new ArrayList<>();
         TreeNode currentNode = root;
@@ -206,7 +206,7 @@ public class BinarySearchTree {
         return result;
     }
 
-    public List<TreeNode> postOrderNonRecursive() {
+    List<TreeNode> postOrderNonRecursive() {
         Stack<TreeNode> stack = new Stack<>();
         Stack<TreeNode> output = new Stack<>();
         List<TreeNode> result = new ArrayList<>();
@@ -227,7 +227,7 @@ public class BinarySearchTree {
         return result;
     }
 
-    public TreeNode getPredecessor(int x) {
+    TreeNode getPredecessor(int x) {
         //求前驱节点和后继节点的方法很类似
         TreeNode firstTurnRight = null;
         TreeNode parent = null;
@@ -254,7 +254,7 @@ public class BinarySearchTree {
         }
     }
 
-    public TreeNode getSuccessor(int x) {
+    TreeNode getSuccessor(int x) {
         //保存该节点的父节点，以及父节点的祖先节点中第一个出现左拐的节点
         TreeNode firstTurnLeft = null;
         TreeNode parent = null;
@@ -280,7 +280,7 @@ public class BinarySearchTree {
         }
     }
 
-    public void remove(int e) {
+    void remove(int e) {
         this.root = remove(root, e);
     }
 
