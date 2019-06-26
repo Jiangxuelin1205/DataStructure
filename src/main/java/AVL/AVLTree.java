@@ -12,15 +12,21 @@ public class AVLTree {
         size = 0;
     }
 
+    @SuppressWarnings("unused")
     public int getSize() {
         return size;
     }
 
+    @SuppressWarnings("unused")
     public boolean isEmpty() {
         return size == 0;
     }
 
-    public boolean isBST(Node node) {
+    public boolean isBST() {
+        return isBST(root);
+    }
+
+    private boolean isBST(Node node) {
         ArrayList<Integer> elements = new ArrayList<>();
         inOrder(node, elements);
         for (int index = 1; index < elements.size(); index++) {
@@ -45,7 +51,7 @@ public class AVLTree {
     }
 
     private boolean isBalanced(Node node) {
-        if (root == null) {
+        if (node == null) {
             return true;
         }
         int balanceFactor = getBalanceFactor(node);
@@ -85,7 +91,7 @@ public class AVLTree {
             node.right = add(node.right, val);
         }
 
-        node.height = 1 + Math.max(node.left.height, node.right.height);
+        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
         int balanceFactor = getBalanceFactor(node);
         //LL
         if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0) {
@@ -137,8 +143,8 @@ public class AVLTree {
         //noinspection SuspiciousNameCombination
         x.right = y;
 
-        y.height = Math.max(y.left.height, y.right.height) + 1;
-        x.height = Math.max(x.left.height, x.right.height) + 1;
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(y.right)) + 1;
 
         return x;
     }
@@ -160,8 +166,8 @@ public class AVLTree {
         //noinspection SuspiciousNameCombination
         x.left = y;
 
-        y.height = Math.max(y.left.height, y.right.height) + 1;
-        x.height = Math.max(x.left.height, y.right.height) + 1;
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
 
         return x;
     }
@@ -180,15 +186,19 @@ public class AVLTree {
         }
     }
 
+    @SuppressWarnings("unused")
     public boolean contains(int val) {
         return getNode(root, val) != null;
     }
 
+    @SuppressWarnings("unused")
     public int get(int key) {
         Node node = getNode(root, key);
+        //noinspection ConstantConditions
         return node == null ? null : node.val;
     }
 
+    @SuppressWarnings("unused")
     public void set(int val, int newValue) {
         Node node = getNode(root, val);
         if (node == null)
@@ -207,7 +217,6 @@ public class AVLTree {
     // 删除掉以node为根的二分搜索树中的最小节点
     // 返回删除节点后新的二分搜索树的根
     private Node removeMin(Node node) {
-
         if (node.left == null) {
             Node rightNode = node.right;
             node.right = null;
@@ -220,6 +229,7 @@ public class AVLTree {
     }
 
     // 从二分搜索树中删除键为key的节点
+    @SuppressWarnings("unused")
     public void remove(int val) {
         Node node = getNode(root, val);
         if (node != null) {
