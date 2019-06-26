@@ -214,20 +214,6 @@ public class AVLTree {
         return minimum(node.left);
     }
 
-    // 删除掉以node为根的二分搜索树中的最小节点
-    // 返回删除节点后新的二分搜索树的根
-    private Node removeMin(Node node) {
-        if (node.left == null) {
-            Node rightNode = node.right;
-            node.right = null;
-            size--;
-            return rightNode;
-        }
-
-        node.left = removeMin(node.left);
-        return node;
-    }
-
     // 从二分搜索树中删除键为key的节点
     @SuppressWarnings("unused")
     public void remove(int val) {
@@ -242,37 +228,73 @@ public class AVLTree {
         if (node == null)
             return null;
 
+        Node retNode;
         if (val < node.val) {
             node.left = remove(node.left, val);
-            return node;
+            retNode = node;
         } else if (val > node.val) {
             node.right = remove(node.right, val);
-            return node;
+            retNode = node;
         } else {   // key.compareTo(node.key) == 0
-
             // 待删除节点左子树为空的情况
             if (node.left == null) {
                 Node rightNode = node.right;
                 node.right = null;
                 size--;
                 return rightNode;
-            }
-
-            // 待删除节点右子树为空的情况
-            if (node.right == null) {
+            } else if (node.right == null) { // 待删除节点右子树为空的情况
                 Node leftNode = node.left;
                 node.left = null;
                 size--;
                 return leftNode;
+            } else {
+                Node successor = minimum(node.right);
+                successor.right = remove(node.right, successor.val);
+                successor.left = node.left;
+
+                node.left = null;
+                node.right = null;
+
+                retNode = successor;
             }
-            Node successor = minimum(node.right);
-            successor.right = removeMin(node.right);
-            successor.left = node.left;
-
-            node.left = node.right = null;
-
-            return successor;
         }
+
+
+
+        retNode.height = 1 + Math.max(getHeight(retNode.left), getHeight(retNode.right));
+        int balanceFactor = getBalanceFactor(retNode);
+        //LL
+        if (balanceFactor > 1 && getBalanceFactor(retNode.left) >= 0) {
+            return rightRotate(retNode);
+        }
+        //RR
+        if (balanceFactor < -1 && getBalanceFactor(retNode.right) <= 0) {
+            return leftRotate(retNode);
+        }
+        //LR
+        //       node
+        //      / \
+        //    left
+        //     \
+        //    right
+        if (balanceFactor > 1 && getBalanceFactor(retNode.left) < 0) {
+            //noinspection SuspiciousNameCombination
+            retNode.left = leftRotate(retNode.left);//先将左子树向右旋转，转换成为LL的情况
+            return rightRotate(retNode);
+        }
+        //RL
+        //   node
+        //  /  \
+        //     right
+        //      /
+        //    left
+        if (balanceFactor < -1 && getBalanceFactor(retNode.right) > 0) {
+            //noinspection SuspiciousNameCombination
+            retNode.right = rightRotate(retNode.right);//先转成RR的情况
+            return leftRotate(retNode);
+        }
+        return retNode;
+
     }
 
 }

@@ -17,4 +17,17 @@ public class AVLTreeTest {
         Assert.assertTrue(avlTree.isBalanced());
         Assert.assertTrue(avlTree.isBST());
     }
+
+    @Test
+    public void remove(){
+        AVLTree avlTree=new AVLTree();
+        avlTree.add(1);
+        avlTree.add(2);
+        avlTree.add(3);
+        avlTree.add(4);
+        avlTree.add(5);
+        avlTree.remove(4);
+        Assert.assertTrue(avlTree.isBalanced());
+        Assert.assertTrue(avlTree.isBST());
+    }
 }
