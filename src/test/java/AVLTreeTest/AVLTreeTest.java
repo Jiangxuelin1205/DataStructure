@@ -30,4 +30,6 @@ public class AVLTreeTest {
         Assert.assertTrue(avlTree.isBalanced());
         Assert.assertTrue(avlTree.isBST());
     }
+
+
 }

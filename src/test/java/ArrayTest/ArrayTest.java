@@ -1,7 +1,6 @@
 package ArrayTest;
 
 import Array.Array;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class ArrayTest {

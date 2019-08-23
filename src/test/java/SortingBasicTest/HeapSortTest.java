@@ -1,6 +1,7 @@
 package SortingBasicTest;
 
 import SortingBasic.HeapSort;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,18 +15,18 @@ public class HeapSortTest {
         };
         @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         ArrayList<Integer> ans = new ArrayList<>();
-        ans.add(62);
-        ans.add(10);
-        ans.add(8);
-        ans.add(7);
-        ans.add(7);
-        ans.add(4);
-        ans.add(3);
-        ans.add(2);
         ans.add(1);
+        ans.add(2);
+        ans.add(3);
+        ans.add(4);
+        ans.add(7);
+        ans.add(7);
+        ans.add(8);
+        ans.add(10);
+        ans.add(62);
         HeapSort h = new HeapSort();
         List<Integer> result = h.heapSort(arr);
         System.out.println(result);
-        //Assert.assertArrayEquals(arr,result);
+//        Assert.assertArrayEquals(arr,result);
     }
 }
