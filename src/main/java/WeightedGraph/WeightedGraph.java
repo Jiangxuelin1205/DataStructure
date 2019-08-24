@@ -1,4 +1,4 @@
-package WeightedMap;
+package WeightedGraph;
 
 import java.util.Comparator;
 import java.util.HashSet;

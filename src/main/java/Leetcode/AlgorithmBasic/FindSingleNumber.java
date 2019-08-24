@@ -1,4 +1,4 @@
-package Leetcode;
+package Leetcode.AlgorithmBasic;
 
 public class FindSingleNumber {
 

@@ -1,8 +1,8 @@
 package WeightedMapTest;
 
-import WeightedMap.DenseGraph;
-import WeightedMap.Edge;
-import WeightedMap.WeightedGraph;
+import WeightedGraph.DenseGraph;
+import WeightedGraph.Edge;
+import WeightedGraph.WeightedGraph;
 import org.junit.Assert;
 import org.junit.Test;
 

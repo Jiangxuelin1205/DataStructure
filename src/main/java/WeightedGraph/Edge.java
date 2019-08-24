@@ -1,4 +1,4 @@
-package WeightedMap;
+package WeightedGraph;
 
 public class Edge {
 

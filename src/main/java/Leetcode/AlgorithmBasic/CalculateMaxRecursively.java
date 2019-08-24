@@ -1,4 +1,4 @@
-package Leetcode;
+package Leetcode.AlgorithmBasic;
 
 public class CalculateMaxRecursively {
     int solution(int[] arr){

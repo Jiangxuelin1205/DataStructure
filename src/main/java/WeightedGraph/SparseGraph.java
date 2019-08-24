@@ -1,4 +1,4 @@
-package WeightedMap;
+package WeightedGraph;
 
 import java.io.*;
 import java.util.*;
